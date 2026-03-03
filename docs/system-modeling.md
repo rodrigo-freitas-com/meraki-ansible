@@ -25,9 +25,9 @@ erDiagram
         string id PK
         string organization_id FK
         string name
-        array product_types
+        string product_types
         string timezone
-        array tags
+        string tags
         string notes
     }
 
@@ -50,7 +50,7 @@ erDiagram
         string name
         string mac
         string model
-        array tags
+        string tags
         float lat
         float lng
         string address
@@ -62,7 +62,7 @@ erDiagram
         string id PK
         string network_id FK
         string name
-        json band_settings
+        string band_settings
     }
 ```
 
