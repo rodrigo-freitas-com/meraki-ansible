@@ -2,13 +2,11 @@
 
 Este documento apresenta os diagramas de arquitetura, fluxos e modelos de dados do projeto Meraki Ansible.
 
----
-
 ## Modelos de Dados
 
 ### Relacionamentos entre Entidades
 
-```
+```text
 ORGANIZATION  1──────N  NETWORK
 NETWORK       1──────N  SSID
 NETWORK       1──────N  ACCESS_POINT
@@ -17,67 +15,65 @@ ACCESS_POINT  N──────1  RF_PROFILE (opcional)
 
 ### ORGANIZATION
 
-| Campo | Tipo | Descricao |
-|-------|------|-----------|
-| id | string | Identificador unico (PK) |
-| name | string | Nome da organizacao |
-| timezone | string | Fuso horario |
-| notes | string | Observacoes |
-| api_enabled | boolean | API habilitada |
+| Campo       | Tipo    | Descricao               |
+| ----------- | ------- | ----------------------- |
+| id          | string  | Identificador unico PK  |
+| name        | string  | Nome da organizacao     |
+| timezone    | string  | Fuso horario            |
+| notes       | string  | Observacoes             |
+| api_enabled | boolean | API habilitada          |
 
 ### NETWORK
 
-| Campo | Tipo | Descricao |
-|-------|------|-----------|
-| id | string | Identificador unico (PK) |
-| organization_id | string | ID da organizacao (FK) |
-| name | string | Nome da rede |
-| product_types | string | Tipos de produto |
-| timezone | string | Fuso horario |
-| tags | string | Tags de classificacao |
-| notes | string | Observacoes |
+| Campo           | Tipo   | Descricao               |
+| --------------- | ------ | ----------------------- |
+| id              | string | Identificador unico PK  |
+| organization_id | string | ID da organizacao FK    |
+| name            | string | Nome da rede            |
+| product_types   | string | Tipos de produto        |
+| timezone        | string | Fuso horario            |
+| tags            | string | Tags de classificacao   |
+| notes           | string | Observacoes             |
 
 ### SSID
 
-| Campo | Tipo | Descricao |
-|-------|------|-----------|
-| number | int | Numero do SSID 0-14 (PK) |
-| network_id | string | ID da rede (FK) |
-| name | string | Nome do SSID |
-| enabled | boolean | SSID ativo |
-| auth_mode | string | Modo de autenticacao |
-| encryption_mode | string | Modo de criptografia |
-| wpa_encryption_mode | string | Versao WPA |
-| psk | string | Senha pre-compartilhada |
-| ip_assignment_mode | string | Modo de atribuicao IP |
-| default_vlan_id | int | VLAN padrao |
+| Campo               | Tipo    | Descricao                 |
+| ------------------- | ------- | ------------------------- |
+| number              | int     | Numero do SSID 0-14 PK    |
+| network_id          | string  | ID da rede FK             |
+| name                | string  | Nome do SSID              |
+| enabled             | boolean | SSID ativo                |
+| auth_mode           | string  | Modo de autenticacao      |
+| encryption_mode     | string  | Modo de criptografia      |
+| wpa_encryption_mode | string  | Versao WPA                |
+| psk                 | string  | Senha pre-compartilhada   |
+| ip_assignment_mode  | string  | Modo de atribuicao IP     |
+| default_vlan_id     | int     | VLAN padrao               |
 
 ### ACCESS_POINT
 
-| Campo | Tipo | Descricao |
-|-------|------|-----------|
-| serial | string | Numero de serie (PK) |
-| network_id | string | ID da rede (FK) |
-| name | string | Nome do AP |
-| mac | string | Endereco MAC |
-| model | string | Modelo do AP |
-| tags | string | Tags de classificacao |
-| lat | float | Latitude |
-| lng | float | Longitude |
-| address | string | Endereco fisico |
-| notes | string | Observacoes |
-| rf_profile_id | string | ID do perfil RF (FK) |
+| Campo         | Tipo   | Descricao               |
+| ------------- | ------ | ----------------------- |
+| serial        | string | Numero de serie PK      |
+| network_id    | string | ID da rede FK           |
+| name          | string | Nome do AP              |
+| mac           | string | Endereco MAC            |
+| model         | string | Modelo do AP            |
+| tags          | string | Tags de classificacao   |
+| lat           | float  | Latitude                |
+| lng           | float  | Longitude               |
+| address       | string | Endereco fisico         |
+| notes         | string | Observacoes             |
+| rf_profile_id | string | ID do perfil RF FK      |
 
 ### RF_PROFILE
 
-| Campo | Tipo | Descricao |
-|-------|------|-----------|
-| id | string | Identificador unico (PK) |
-| network_id | string | ID da rede (FK) |
-| name | string | Nome do perfil |
-| band_settings | string | Configuracoes de banda |
-
----
+| Campo         | Tipo   | Descricao               |
+| ------------- | ------ | ----------------------- |
+| id            | string | Identificador unico PK  |
+| network_id    | string | ID da rede FK           |
+| name          | string | Nome do perfil          |
+| band_settings | string | Configuracoes de banda  |
 
 ## Arquitetura do Sistema
 
@@ -163,8 +159,6 @@ graph LR
     T4 --> API
 ```
 
----
-
 ## Fluxo de Autenticacao
 
 ### Validacao da API Key
@@ -201,8 +195,6 @@ flowchart TD
     F --> I[Fim com erro]
     H --> J[Fim com sucesso]
 ```
-
----
 
 ## Fluxo de Provisionamento
 
@@ -254,8 +246,6 @@ sequenceDiagram
     A->>A: Consolidar Network IDs
 ```
 
----
-
 ## Fluxo de Configuracao de SSIDs
 
 ### Processo de Configuracao
@@ -284,8 +274,6 @@ flowchart TD
     O -->|Nao| P[Fim]
 ```
 
----
-
 ## Fluxo de Access Points
 
 ### Claim e Configuracao
@@ -311,8 +299,6 @@ sequenceDiagram
         M-->>A: 200 OK
     end
 ```
-
----
 
 ## Fluxo de Seguranca
 
@@ -366,8 +352,6 @@ flowchart TD
     I --> L
 ```
 
----
-
 ## Diagrama de Estados
 
 ### Estados do Provisionamento
@@ -391,8 +375,6 @@ stateDiagram-v2
     Concluido --> [*]
     Erro --> [*]
 ```
-
----
 
 ## Proximos Passos
 
