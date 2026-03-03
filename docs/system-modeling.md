@@ -307,7 +307,7 @@ flowchart TD
     G -->|open| H[Sem senha]
     G -->|psk| I[Incluir PSK]
 
-    H --> J[PUT /networks/{id}/wireless/ssids/{n}]
+    H --> J[PUT /networks/id/wireless/ssids/n]
     I --> J
 
     J --> K{Sucesso?}
