@@ -1,0 +1,42 @@
+- name: Meraki Dashboard Provisioning
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - "{{ meraki_vars_file | default('vars/meraki_config.yml') }}"
+
+  pre_tasks:
+    - name: Validar variáveis obrigatórias
+      ansible.builtin.assert:
+        that:
+          - meraki_api_key is defined
+          - meraki_api_key | length > 0
+          - meraki_config is defined
+        fail_msg: "Variáveis obrigatórias não definidas. Verifique meraki_api_key e meraki_config."
+        success_msg: "Validação de variáveis OK"
+
+    - name: Exibir configuração que será aplicada
+      ansible.builtin.debug:
+        msg:
+          - "Organização: {{ meraki_config.organization.name }}"
+          - "Networks a criar: {{ meraki_config.networks | length }}"
+          - "Total de APs: {{ meraki_config.networks | sum(attribute='access_points') | map(attribute='name') | list | length }}"
+      vars:
+        ap_count: "{{ meraki_config.networks | map(attribute='access_points') | flatten | length }}"
+
+  roles:
+    - meraki_provisioning
+
+  post_tasks:
+    - name: Exibir resumo do provisionamento
+      ansible.builtin.debug:
+        msg:
+          - "============================================"
+          - "    PROVISIONAMENTO CONCLUÍDO"
+          - "============================================"
+          - "Organização ID: {{ org_id }}"
+          - "Networks criadas: {{ created_networks | length }}"
+          - "APs configurados: {{ claimed_aps | default([]) | length }}"
+          - "============================================"
+      when: org_id is defined

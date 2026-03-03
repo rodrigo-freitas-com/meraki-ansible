@@ -1,0 +1,89 @@
+site_name: Meraki Ansible
+site_description: Framework de automação para provisionamento de infraestrutura Cisco Meraki
+site_author: Freitas
+repo_url: https://github.com/rodrigo-freitas-com/meraki-ansible
+repo_name: meraki-ansible
+
+theme:
+  name: material
+  language: pt-BR
+  palette:
+    scheme: default
+    primary: teal
+    accent: cyan
+
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+  icon:
+    repo: fontawesome/brands/github
+
+
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.copy
+
+
+plugins:
+  - search
+
+markdown_extensions:
+  - tables
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - Início: index.md
+  - Visão Geral: overview.md
+  - Pré-requisitos: prerequisites.md
+  - Instalação: installation.md
+  - Configuração: configuration.md
+  - Guidelines e Padrões: guidelines.md
+  - Estrutura do Projeto: structure.md
+  - API Endpoints: api-endpoints.md
+  - Modelagem do Sistema: system-modeling.md
+  - Autenticação e Segurança: authentication.md
+  - Desenvolvimento: development.md
+  - Testes: testing.md
+  - Deploy: deploy.md
+  - Contribuição: contributing.md
+  - Release Notes: release-notes.md
+
+copyright: "&copy; 2026 Freitas"

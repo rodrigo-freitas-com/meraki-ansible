@@ -1,0 +1,159 @@
+---
+# ===========================================================
+# Exemplo 
+# ===========================================================
+
+meraki_config:
+
+  # ---------------------------------------------------------
+  # ORGANIZAÇÃO
+  # ---------------------------------------------------------
+  
+  organization:
+    name: "ABC Empresa LTDA"
+    timezone: "America/Sao_Paulo"
+    notes: "Cliente ABC - Provisionado via Ansible by Freitas"
+
+  # ---------------------------------------------------------
+  # NETWORKS
+  # ---------------------------------------------------------
+  
+  networks:
+
+    # ------ SEDE ------
+    - name: "ABC-SEDE-SP"
+      product_types:
+        - wireless
+        - switch
+        - appliance
+      timezone: "America/Sao_Paulo"
+      tags:
+        - sede
+        - sao_paulo
+      notes: "Sede principal São Paulo"
+
+      ssids:
+        - number: 0
+          name: "ABC-CORP"
+          enabled: true
+          auth_mode: "psk"
+          encryption_mode: "wpa"
+          wpa_encryption_mode: "WPA2 only"
+          psk: "SenhaCorp@ABC"
+          ip_assignment_mode: "Bridge mode"
+          vlan_id: 10
+
+        - number: 1
+          name: "ABC-VISITANTES"
+          enabled: true
+          auth_mode: "open"
+          ip_assignment_mode: "NAT mode"
+
+        - number: 2
+          name: "ABC-IOT"
+          enabled: true
+          auth_mode: "psk"
+          encryption_mode: "wpa"
+          wpa_encryption_mode: "WPA2 only"
+          psk: "SenhaIoT@ABC"
+          ip_assignment_mode: "Bridge mode"
+          vlan_id: 99
+
+      access_points:
+        - name: "AP-ABC-SEDE-01"
+          serial: "XXXX-XXXX-0001" #CloudId
+          tags: ["sede", "andar1"]
+          address: "Av. Paulista, 1000, São Paulo, SP"
+          lat: -23.5613
+          lng: -46.6565
+          notes: "AP térreo - recepção"
+
+        - name: "AP-ABC-SEDE-02"
+          serial: "XXXX-XXXX-0002" #CloudId
+          tags: ["sede", "andar2"]
+          notes: "AP andar 2 - escritório"
+
+        - name: "AP-ABC-SEDE-03"
+          serial: "XXXX-XXXX-0003"
+          tags: ["sede", "andar3"]
+          notes: "AP andar 3 - diretoria"
+          
+
+    # ------ FILIAL 1 ------
+    - name: "ABC-FILIAL-RJ"
+      product_types:
+        - wireless
+        - switch
+      timezone: "America/Sao_Paulo"
+      tags:
+        - filial
+        - rio_de_janeiro
+      notes: "Filial Rio de Janeiro"
+
+      ssids:
+        - number: 0
+          name: "ABC-CORP"
+          enabled: true
+          auth_mode: "psk"
+          encryption_mode: "wpa"
+          wpa_encryption_mode: "WPA2 only"
+          psk: "SenhaCorp@ABC"
+          ip_assignment_mode: "Bridge mode"
+          vlan_id: 10
+
+        - number: 1
+          name: "ABC-VISITANTES"
+          enabled: true
+          auth_mode: "open"
+          ip_assignment_mode: "NAT mode"
+
+      access_points:
+        - name: "AP-ABC-RJ-01"
+          serial: "YYYY-YYYY-0001"
+          tags: ["filial_rj", "andar1"]
+          address: "Av. Rio Branco, 500, Rio de Janeiro, RJ"
+          lat: -22.9068
+          lng: -43.1729
+          notes: "AP andar 1"
+
+        - name: "AP-ABC-RJ-02"
+          serial: "YYYY-YYYY-0002"
+          tags: ["filial_rj", "andar2"]
+          notes: "AP andar 2"
+
+
+    # ------ FILIAL 2 ------
+    - name: "ABC-FILIAL-BH"
+      product_types:
+        - wireless
+      timezone: "America/Sao_Paulo"
+      tags:
+        - filial
+        - belo_horizonte
+      notes: "Filial Belo Horizonte"
+
+      ssids:
+        - number: 0
+          name: "ABC-CORP"
+          enabled: true
+          auth_mode: "psk"
+          encryption_mode: "wpa"
+          wpa_encryption_mode: "WPA2 only"
+          psk: "SenhaCorp@ABC"
+          ip_assignment_mode: "Bridge mode"
+          vlan_id: 10
+
+        - number: 1
+          name: "ABC-VISITANTES"
+          enabled: true
+          auth_mode: "open"
+          ip_assignment_mode: "NAT mode"
+
+      access_points:
+        - name: "AP-ABC-BH-01"
+          serial: "ZZZZ-ZZZZ-0001" #CloudId
+          tags: ["filial_bh", "andar1"]
+          address: "Av. Afonso Pena, 1000, Belo Horizonte, MG"
+          lat: -19.9191
+          lng: -43.9386
+          notes: "AP único - escritório BH"

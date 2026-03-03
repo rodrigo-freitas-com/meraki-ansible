@@ -1,0 +1,247 @@
+---
+# =============================================================================
+# Role: meraki_provisioning
+# Tasks: Provisionamento completo do Meraki
+# =============================================================================
+
+# -------------------------------------------------
+#  ORGANIZAÇÃO
+# -------------------------------------------------
+
+- name: "[ORG] - Verificar se organização já existe"
+  ansible.builtin.uri:
+    url: "{{ meraki_base_url }}/organizations"
+    method: GET
+    headers:
+      X-Cisco-Meraki-API-Key: "{{ meraki_api_key }}"
+      Content-Type: "application/json"
+    status_code: [200]
+  register: existing_orgs
+  tags: [org, always]
+
+- name: "[ORG] Filtrar organização existente por nome"
+  ansible.builtin.set_fact:
+    existing_org: "{{ existing_orgs.json | selectattr('name', 'equalto', meraki_config.organization.name) | list | first | default({}) }}"
+  tags: [org, always]
+
+- name: "[ORG] Criar organização (se não existir)"
+  ansible.builtin.uri:
+    url: "{{ meraki_base_url }}/organizations"
+    method: POST
+    headers:
+      X-Cisco-Meraki-API-Key: "{{ meraki_api_key }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      name: "{{ meraki_config.organization.name }}"
+      management:
+        details:
+          - name: "MSP notes"
+            value: "{{ meraki_config.organization.notes | default('Criado via Ansible') }}"
+    status_code: [201]
+  register: created_org
+  when: existing_org | length == 0
+  tags: [org]
+
+- name: "[ORG] Definir org_id (organização criada)"
+  ansible.builtin.set_fact:
+    org_id: "{{ created_org.json.id }}"
+  when: existing_org | length == 0
+  tags: [org]
+
+- name: "[ORG] Definir org_id (organização existente)"
+  ansible.builtin.set_fact:
+    org_id: "{{ existing_org.id }}"
+  when: existing_org | length > 0
+  tags: [org]
+
+- name: "[ORG] Status da organização"
+  ansible.builtin.debug:
+    msg: "Usando organização '{{ meraki_config.organization.name }}' com ID: {{ org_id }}"
+  tags: [org]
+
+# -----------------------------------------------------------
+# NETWORKS
+# -----------------------------------------------------------
+
+- name: "[NET] Listar networks existentes na organização"
+  ansible.builtin.uri:
+    url: "{{ meraki_base_url }}/organizations/{{ org_id }}/networks"
+    method: GET
+    headers:
+      X-Cisco-Meraki-API-Key: "{{ meraki_api_key }}"
+      Content-Type: "application/json"
+    status_code: [200]
+  register: existing_networks_response
+  tags: [networks]
+
+- name: "[NET] Registrar networks existentes"
+  ansible.builtin.set_fact:
+    existing_network_names: "{{ existing_networks_response.json | map(attribute='name') | list }}"
+    existing_networks_map: "{{ existing_networks_response.json | items2dict(key_name='name', value_name='id') }}"
+  tags: [networks]
+
+- name: "[NET] Criar networks"
+  ansible.builtin.uri:
+    url: "{{ meraki_base_url }}/organizations/{{ org_id }}/networks"
+    method: POST
+    headers:
+      X-Cisco-Meraki-API-Key: "{{ meraki_api_key }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      name: "{{ item.name }}"
+      productTypes: "{{ item.product_types | default(['wireless']) }}" #se tiver switch coloca uma virgula e adicione
+      timeZone: "{{ item.timezone | default(meraki_config.organization.timezone | default('America/Sao_Paulo')) }}"
+      tags: "{{ item.tags | default([]) }}"
+      notes: "{{ item.notes | default('Criado via Ansible') }}"
+    status_code: [201]
+  loop: "{{ meraki_config.networks }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: networks_creation_result
+  when: item.name not in existing_network_names
+  tags: [networks]
+
+- name: "[NET] Consolidar lista de networks criadas"
+  ansible.builtin.set_fact:
+    created_networks: "{{ networks_creation_result.results | selectattr('json', 'defined') | map(attribute='json') | list }}"
+  tags: [networks]
+
+- name: "[NET] Atualizar mapa de networks (incluindo recém-criadas)"
+  ansible.builtin.set_fact:
+    all_networks_map: "{{ existing_networks_map | combine(created_networks | items2dict(key_name='name', value_name='id')) }}"
+  tags: [networks]
+
+- name: "[NET] Listar todas as networks após criação"
+  ansible.builtin.debug:
+    msg: "Network '{{ item.name }}' -> ID: {{ all_networks_map[item.name] }}"
+  loop: "{{ meraki_config.networks }}"
+  loop_control:
+    label: "{{ item.name }}"
+  tags: [networks]
+
+# -----------------------------------------------------------
+# SSID's
+# -----------------------------------------------------------
+
+- name: "[SSID] Configurar SSIDs nas networks wireless"
+  ansible.builtin.uri:
+    url: "{{ meraki_base_url }}/networks/{{ all_networks_map[net_item.name] }}/wireless/ssids/{{ ssid_item.number | default(0) }}"
+    method: PUT
+    headers:
+      X-Cisco-Meraki-API-Key: "{{ meraki_api_key }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      name: "{{ ssid_item.name }}"
+      enabled: "{{ ssid_item.enabled | default(true) }}"
+      authMode: "{{ ssid_item.auth_mode | default('open') }}"
+      encryptionMode: "{{ ssid_item.encryption_mode | default('wpa') }}"
+      wpaEncryptionMode: "{{ ssid_item.wpa_encryption_mode | default('WPA2 only') }}"
+      psk: "{{ ssid_item.psk | default(omit) }}"
+      ipAssignmentMode: "{{ ssid_item.ip_assignment_mode | default('Bridge mode') }}"
+      defaultVlanId: "{{ ssid_item.vlan_id | default(omit) }}"
+    status_code: [200]
+  loop: "{{ meraki_config.networks | subelements('ssids', skip_missing=True) }}"
+  loop_control:
+    loop_var: ssid_loop
+    label: "{{ net_item.name }} / SSID: {{ ssid_item.name }}"
+  vars:
+    net_item: "{{ ssid_loop.0 }}"
+    ssid_item: "{{ ssid_loop.1 }}"
+  when: "'wireless' in (net_item.product_types | default(['wireless']))"
+  tags: [networks, ssids]
+
+# -----------------------------------------------------------
+# ACCESS POINTS - CLAIM
+# -----------------------------------------------------------
+
+- name: "[AP] Coletar seriais de todos os APs"
+  ansible.builtin.set_fact:
+    all_ap_serials: "{{ meraki_config.networks | map(attribute='access_points') | flatten | map(attribute='serial') | list }}"
+  tags: [aps]
+
+- name: "[AP] Claim de APs na organização"
+  ansible.builtin.uri:
+    url: "{{ meraki_base_url }}/organizations/{{ org_id }}/inventory/claim"
+    method: POST
+    headers:
+      X-Cisco-Meraki-API-Key: "{{ meraki_api_key }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      serials: "{{ all_ap_serials }}"
+    status_code: [200]
+  register: claim_result
+  when: all_ap_serials | length > 0
+  tags: [aps]
+
+- name: "[AP] Aguardar processamento do claim"
+  ansible.builtin.pause:
+    seconds: "{{ meraki_claim_wait }}"
+  when: all_ap_serials | length > 0
+  tags: [aps]
+
+- name: "[AP] Adicionar APs às networks"
+  ansible.builtin.uri:
+    url: "{{ meraki_base_url }}/networks/{{ all_networks_map[net_item.name] }}/devices/claim"
+    method: POST
+    headers:
+      X-Cisco-Meraki-API-Key: "{{ meraki_api_key }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      serials: "{{ net_item.access_points | map(attribute='serial') | list }}"
+    status_code: [200]
+  loop: "{{ meraki_config.networks | selectattr('access_points', 'defined') | list }}"
+  loop_control:
+    loop_var: net_item
+    label: "{{ net_item.name }} - {{ net_item.access_points | length }} APs"
+  when: net_item.access_points | length > 0
+  register: claimed_aps
+  tags: [aps]
+
+# -----------------------------------------------------------
+# ACCESS POINTS - CONFIGURAÇÃO INDIVIDUAL
+# -----------------------------------------------------------
+
+- name: "[AP-CFG] Configurar APs individualmente"
+  ansible.builtin.uri:
+    url: "{{ meraki_base_url }}/devices/{{ ap_item.serial }}"
+    method: PUT
+    headers:
+      X-Cisco-Meraki-API-Key: "{{ meraki_api_key }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      name: "{{ ap_item.name }}"
+      tags: "{{ ap_item.tags | default([]) }}"
+      lat: "{{ ap_item.lat | default(omit) }}"
+      lng: "{{ ap_item.lng | default(omit) }}"
+      address: "{{ ap_item.address | default(omit) }}"
+      notes: "{{ ap_item.notes | default(omit) }}"
+    status_code: [200]
+  loop: "{{ meraki_config.networks | map(attribute='access_points') | flatten }}"
+  loop_control:
+    loop_var: ap_item
+    label: "{{ ap_item.name }} ({{ ap_item.serial }})"
+  tags: [aps, ap_config]
+
+- name: "[AP-CFG] Configurar rádio dos APs"
+  ansible.builtin.uri:
+    url: "{{ meraki_base_url }}/devices/{{ ap_item.serial }}/wireless/radio/settings"
+    method: PUT
+    headers:
+      X-Cisco-Meraki-API-Key: "{{ meraki_api_key }}"
+      Content-Type: "application/json"
+    body_format: json
+    body:
+      rfProfileId: "{{ ap_item.rf_profile_id | default(omit) }}"
+    status_code: [200]
+  loop: "{{ meraki_config.networks | map(attribute='access_points') | flatten }}"
+  loop_control:
+    loop_var: ap_item
+    label: "{{ ap_item.name }} ({{ ap_item.serial }})"
+  when: ap_item.rf_profile_id is defined
+  tags: [aps, ap_config, rf]

@@ -1,0 +1,160 @@
+---
+# =============================================================================
+#   Variáveis de Configuração Meraki
+#   Uso: ansible-playbook meraki_provision.yml -e @vars/meraki_config.yml
+#
+#   ATENÇÃO: meraki_api_key deve vir do Vault ou variável de ambiente:
+#   export MERAKI_API_KEY="sua_chave_aqui"
+#   ansible-playbook meraki_provision.yml -e meraki_api_key=$MERAKI_API_KEY -e @vars/meraki_config.yml
+# =============================================================================
+
+# Chave de API (sobrescrever via --extra-vars ou vault)
+# meraki_api_key: "{{ vault_meraki_api_key }}"
+
+meraki_config:
+
+  # -------------------------------------------------------------------------
+  # ORGANIZAÇÃO
+  # -------------------------------------------------------------------------
+  organization:
+    name: "XPTO"
+    timezone: "America/Sao_Paulo"
+    notes: "Provisionado via Ansible - {{ lookup('pipe', 'date +%Y-%m-%d') }}"
+
+  # -------------------------------------------------------------------------
+  # NETWORKS
+  # -------------------------------------------------------------------------
+  
+  networks:
+
+    - name: "Nome_da_Network"
+      product_types:
+        - wireless
+        - switch
+        - appliance
+      timezone: "America/Sao_Paulo"
+      tags:
+        - matriz
+        - sao_paulo
+      notes: "Sede principal São Paulo"
+
+      # SSIDs desta network
+      ssids:
+        - number: 0
+          name: "CORPORATIVO"
+          enabled: true
+          auth_mode: "psk"
+          encryption_mode: "wpa"
+          wpa_encryption_mode: "WPA2 only"
+          psk: "SenhaCorpo@2024"
+          ip_assignment_mode: "Bridge mode"
+          vlan_id: 10
+
+        - number: 1
+          name: "VISITANTES"
+          enabled: true
+          auth_mode: "open"
+          ip_assignment_mode: "NAT mode"
+
+        - number: 2
+          name: "IOT"
+          enabled: true
+          auth_mode: "psk"
+          encryption_mode: "wpa"
+          wpa_encryption_mode: "WPA2 only"
+          psk: "IoTSenha@2024"
+          ip_assignment_mode: "Bridge mode"
+          vlan_id: 99
+
+      # APs desta network
+      access_points:
+        - name: "AP-MATRIZ-RECEPCAO"
+          serial: "XXXX-XXXX-XXXX"
+          tags: ["andar1", "recepcao"]
+          address: "Av. Paulista, 1000, São Paulo, SP"
+          lat: -23.5613
+          lng: -46.6565
+          notes: "AP da recepção - térreo"
+
+        - name: "AP-MATRIZ-SALA-REUNIAO-01"
+          serial: "YYYY-YYYY-YYYY"
+          tags: ["andar1", "sala_reuniao"]
+          notes: "Sala de reunião principal"
+
+        - name: "AP-MATRIZ-TI"
+          serial: "ZZZZ-ZZZZ-ZZZZ"
+          tags: ["andar2", "ti"]
+          notes: "Sala de TI - andar 2"
+
+    - name: "FILIAL-RJ"
+      product_types:
+        - wireless
+        - switch
+      timezone: "America/Sao_Paulo"
+      tags:
+        - filial
+        - rio_de_janeiro
+      notes: "Filial Rio de Janeiro"
+
+      ssids:
+        - number: 0
+          name: "CORPORATIVO"
+          enabled: true
+          auth_mode: "psk"
+          encryption_mode: "wpa"
+          wpa_encryption_mode: "WPA2 only"
+          psk: "SenhaCorpo@2024"
+          ip_assignment_mode: "Bridge mode"
+          vlan_id: 10
+
+        - number: 1
+          name: "VISITANTES"
+          enabled: true
+          auth_mode: "open"
+          ip_assignment_mode: "NAT mode"
+
+      access_points:
+        - name: "AP-RJ-ANDAR01-A"
+          serial: "AAAA-AAAA-AAAA"
+          tags: ["andar1", "filial_rj"]
+          address: "Av. Rio Branco, 500, Rio de Janeiro, RJ"
+          lat: -22.9068
+          lng: -43.1729
+          notes: "AP do andar 1 - ala A"
+
+        - name: "AP-RJ-ANDAR01-B"
+          serial: "BBBB-BBBB-BBBB"
+          tags: ["andar1", "filial_rj"]
+          notes: "AP do andar 1 - ala B"
+
+    - name: "FILIAL-BH"
+      product_types:
+        - wireless
+      timezone: "America/Sao_Paulo"
+      tags:
+        - filial
+        - belo_horizonte
+      notes: "Filial Belo Horizonte"
+
+      ssids:
+        - number: 0
+          name: "CORPORATIVO"
+          enabled: true
+          auth_mode: "psk"
+          encryption_mode: "wpa"
+          wpa_encryption_mode: "WPA2 only"
+          psk: "SenhaCorpo@2024"
+          ip_assignment_mode: "Bridge mode"
+          vlan_id: 10
+
+        - number: 1
+          name: "VISITANTES"
+          enabled: true
+          auth_mode: "open"
+          ip_assignment_mode: "NAT mode"
+
+      access_points:
+        - name: "AP-BH-PRINCIPAL"
+          serial: "CCCC-CCCC-CCCC"
+          tags: ["andar1", "filial_bh"]
+          notes: "AP principal BH"
