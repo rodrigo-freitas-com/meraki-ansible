@@ -1627,34 +1627,35 @@
 <h2 id="fluxo-de-configuracao-de-ssids">Fluxo de Configuração de SSIDs<a class="headerlink" href="#fluxo-de-configuracao-de-ssids" title="Permanent link">&para;</a></h2>
 <h3 id="processo-de-configuracao-de-ssid">Processo de Configuração de SSID<a class="headerlink" href="#processo-de-configuracao-de-ssid" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>flowchart TD
-    A[Início SSID Config] --&gt; B[Para cada Rede]
-    B --&gt; C{Rede tem&lt;br/&gt;wireless?}
+    A[Início Configuração SSIDs] --&gt; B[Para cada Network ID]
+    B --&gt; C{Network possui&lt;br/&gt;produto wireless?}
 
-    C --&gt;|Não| D[Pular rede]
-    C --&gt;|Sim| E[Para cada SSID]
+    C --&gt;|Não| D[Pular network]
+    C --&gt;|Sim| E[Para cada SSID definido&lt;br/&gt;na meraki_config.yml]
 
-    E --&gt; F[Montar payload]
+    E --&gt; F[Definir número do SSID&lt;br/&gt;(0-14)]
+    F --&gt; G[Montar payload completo]
 
-    F --&gt; G{Auth Mode?}
-    G --&gt;|open| H[Sem senha]
-    G --&gt;|psk| I[Incluir PSK]
+    G --&gt; H{auth_mode}
+    H --&gt;|open| I[Remover campos de senha]
+    H --&gt;|psk| J[Incluir encryptionMode&lt;br/&gt;e psk]
 
-    H --&gt; J[PUT /networks/id/wireless/ssids/n]
-    I --&gt; J
+    I --&gt; K[PUT /networks/{network_id}/wireless/ssids/{number}]
+    J --&gt; K
 
-    J --&gt; K{Sucesso?}
-    K --&gt;|Sim| L[SSID configurado]
-    K --&gt;|Não| M[Registrar erro]
+    K --&gt; L{Status 200?}
+    L --&gt;|Sim| M[SSID atualizado com sucesso]
+    L --&gt;|Não| N[Registrar erro e continuar]
 
-    L --&gt; N{Mais SSIDs?}
-    M --&gt; N
+    M --&gt; O{Há mais SSIDs?}
+    N --&gt; O
 
-    N --&gt;|Sim| E
-    N --&gt;|Não| O{Mais redes?}
+    O --&gt;|Sim| E
+    O --&gt;|Não| P{Há mais networks?}
 
-    D --&gt; O
-    O --&gt;|Sim| B
-    O --&gt;|Não| P[Fim]</code></pre>
+    D --&gt; P
+    P --&gt;|Sim| B
+    P --&gt;|Não| Q[Fim]</code></pre>
 <h2 id="fluxo-de-provisionamento-de-access-points">Fluxo de Provisionamento de Access Points<a class="headerlink" href="#fluxo-de-provisionamento-de-access-points" title="Permanent link">&para;</a></h2>
 <h3 id="fluxo-de-claim-e-configuracao-de-aps">Fluxo de Claim e Configuração de APs<a class="headerlink" href="#fluxo-de-claim-e-configuracao-de-aps" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>sequenceDiagram
