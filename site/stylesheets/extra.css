@@ -1,0 +1,81 @@
+/* Estilos customizados para Meraki Ansible Docs */
+
+/* Variáveis de cor customizadas */
+:root {
+  --md-primary-fg-color: #009688;
+  --md-primary-fg-color--light: #4db6ac;
+  --md-primary-fg-color--dark: #00796b;
+  --md-accent-fg-color: #00bcd4;
+}
+
+/* Estilo para código inline */
+code {
+  border-radius: 4px;
+}
+
+/* Tabelas mais legíveis */
+.md-typeset table:not([class]) {
+  font-size: 0.85rem;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-primary-fg-color);
+  color: white;
+}
+
+/* Cards de navegação */
+.md-typeset .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Destaque para admonitions */
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
+  border-color: #00bcd4;
+}
+
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border-color: #ff9800;
+}
+
+/* Mermaid diagrams */
+.mermaid {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* Header customizado */
+.md-header {
+  background-color: var(--md-primary-fg-color);
+}
+
+/* Footer */
+.md-footer {
+  margin-top: 2rem;
+}
+
+/* Links de navegação */
+.md-nav__link--active {
+  font-weight: bold;
+}
+
+/* Responsividade para tabelas em mobile */
+@media screen and (max-width: 768px) {
+  .md-typeset table:not([class]) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* Print styles */
+@media print {
+  .md-sidebar,
+  .md-header,
+  .md-footer {
+    display: none;
+  }
+}
