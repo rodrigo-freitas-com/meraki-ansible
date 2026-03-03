@@ -1,81 +1,149 @@
 /* Estilos customizados para Meraki Ansible Docs */
 
-/* Variáveis de cor customizadas */
-:root {
-  --md-primary-fg-color: #009688;
-  --md-primary-fg-color--light: #4db6ac;
-  --md-primary-fg-color--dark: #00796b;
-  --md-accent-fg-color: #00bcd4;
-}
-
-/* Estilo para código inline */
-code {
-  border-radius: 4px;
-}
-
-/* Tabelas mais legíveis */
-.md-typeset table:not([class]) {
-  font-size: 0.85rem;
-}
-
-.md-typeset table:not([class]) th {
-  background-color: var(--md-primary-fg-color);
-  color: white;
-}
-
-/* Cards de navegação */
-.md-typeset .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-/* Destaque para admonitions */
-.md-typeset .admonition.tip,
-.md-typeset details.tip {
-  border-color: #00bcd4;
-}
-
-.md-typeset .admonition.warning,
-.md-typeset details.warning {
-  border-color: #ff9800;
-}
-
-/* Mermaid diagrams */
+/* Mermaid - Forcar cores para modo dark */
 .mermaid {
-  text-align: center;
-  margin: 1rem 0;
+  background: transparent !important;
 }
 
-/* Header customizado */
-.md-header {
-  background-color: var(--md-primary-fg-color);
+/* ERD Diagram */
+.mermaid .er.entityBox {
+  fill: #2d2d2d !important;
+  stroke: #ffffff !important;
 }
 
-/* Footer */
-.md-footer {
-  margin-top: 2rem;
+.mermaid .er.entityLabel {
+  fill: #ffffff !important;
+  color: #ffffff !important;
 }
 
-/* Links de navegação */
-.md-nav__link--active {
-  font-weight: bold;
+.mermaid .er.attributeBoxOdd,
+.mermaid .er.attributeBoxEven {
+  fill: #3d3d3d !important;
+  stroke: #666666 !important;
 }
 
-/* Responsividade para tabelas em mobile */
-@media screen and (max-width: 768px) {
-  .md-typeset table:not([class]) {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
+.mermaid text {
+  fill: #ffffff !important;
+  color: #ffffff !important;
 }
 
-/* Print styles */
-@media print {
-  .md-sidebar,
-  .md-header,
-  .md-footer {
-    display: none;
-  }
+.mermaid .entityBox {
+  fill: #2d2d2d !important;
+  stroke: #00bcd4 !important;
+}
+
+.mermaid .relationshipLabelBox {
+  fill: #1e1e1e !important;
+}
+
+.mermaid .relationshipLine {
+  stroke: #00bcd4 !important;
+}
+
+/* Flowchart */
+.mermaid .node rect,
+.mermaid .node polygon,
+.mermaid .node circle {
+  fill: #2d2d2d !important;
+  stroke: #00bcd4 !important;
+}
+
+.mermaid .node .label {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.mermaid .edgeLabel {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+.mermaid .edgePath path {
+  stroke: #00bcd4 !important;
+}
+
+.mermaid marker path {
+  fill: #00bcd4 !important;
+}
+
+/* Sequence Diagram */
+.mermaid .actor {
+  fill: #2d2d2d !important;
+  stroke: #00bcd4 !important;
+}
+
+.mermaid .actor-line {
+  stroke: #666666 !important;
+}
+
+.mermaid text.actor {
+  fill: #ffffff !important;
+}
+
+.mermaid .messageLine0,
+.mermaid .messageLine1 {
+  stroke: #00bcd4 !important;
+}
+
+.mermaid .messageText {
+  fill: #ffffff !important;
+}
+
+.mermaid .loopText,
+.mermaid .loopLine {
+  fill: #ffffff !important;
+  stroke: #666666 !important;
+}
+
+.mermaid .labelBox {
+  fill: #2d2d2d !important;
+  stroke: #666666 !important;
+}
+
+.mermaid .labelText {
+  fill: #ffffff !important;
+}
+
+/* State Diagram */
+.mermaid .stateGroup rect {
+  fill: #2d2d2d !important;
+  stroke: #00bcd4 !important;
+}
+
+.mermaid .stateGroup .state-title {
+  fill: #ffffff !important;
+}
+
+/* Subgraph */
+.mermaid .cluster rect {
+  fill: #252525 !important;
+  stroke: #444444 !important;
+}
+
+.mermaid .cluster text {
+  fill: #ffffff !important;
+}
+
+/* Tabelas */
+.md-typeset table:not([class]) th {
+  background-color: #00796b !important;
+  color: #ffffff !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background-color: #00796b !important;
+  color: #ffffff !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) td {
+  border-color: #444444 !important;
+}
+
+/* Links */
+.md-typeset a {
+  color: #00bcd4 !important;
+}
+
+[data-md-color-scheme="slate"] .md-typeset a {
+  color: #4dd0e1 !important;
 }
