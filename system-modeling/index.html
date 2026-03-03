@@ -1371,8 +1371,7 @@
 <p>Este documento apresenta os diagramas de arquitetura, fluxos e modelos de dados do projeto Meraki Ansible.</p>
 <h2 id="modelos-de-dados">Modelos de Dados<a class="headerlink" href="#modelos-de-dados" title="Permanent link">&para;</a></h2>
 <h3 id="diagrama-entidade-relacionamento-erd">Diagrama Entidade-Relacionamento (ERD)<a class="headerlink" href="#diagrama-entidade-relacionamento-erd" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-erDiagram
+<pre class="mermaid"><code>erDiagram
     ORGANIZATION ||--o{ NETWORK : contains
     NETWORK ||--o{ SSID : has
     NETWORK ||--o{ ACCESS_POINT : has
@@ -1431,8 +1430,7 @@ erDiagram
     }</code></pre>
 <h2 id="arquitetura-do-sistema">Arquitetura do Sistema<a class="headerlink" href="#arquitetura-do-sistema" title="Permanent link">&para;</a></h2>
 <h3 id="visao-geral-da-arquitetura">Visão Geral da Arquitetura<a class="headerlink" href="#visao-geral-da-arquitetura" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-graph TB
+<pre class="mermaid"><code>graph TB
     subgraph "Ambiente Local"
         A[Operador] --&gt; B[Ansible Controller]
         B --&gt; C[Playbook&lt;br/&gt;meraki_provision.yml]
@@ -1465,8 +1463,7 @@ graph TB
 
     D --&gt;|HTTPS/REST| G</code></pre>
 <h3 id="componentes-do-sistema">Componentes do Sistema<a class="headerlink" href="#componentes-do-sistema" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-graph LR
+<pre class="mermaid"><code>graph LR
     subgraph "Camada de Apresentação"
         A[CLI - Ansible Playbook]
     end
@@ -1512,8 +1509,7 @@ graph LR
     I --&gt; M</code></pre>
 <h2 id="fluxo-de-autenticacao">Fluxo de Autenticação<a class="headerlink" href="#fluxo-de-autenticacao" title="Permanent link">&para;</a></h2>
 <h3 id="fluxo-de-validacao-da-api-key">Fluxo de Validação da API Key<a class="headerlink" href="#fluxo-de-validacao-da-api-key" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-sequenceDiagram
+<pre class="mermaid"><code>sequenceDiagram
     participant O as Operador
     participant A as Ansible
     participant V as Vault
@@ -1544,8 +1540,7 @@ sequenceDiagram
         end
     end</code></pre>
 <h3 id="processo-de-descriptografia-do-vault">Processo de Descriptografia do Vault<a class="headerlink" href="#processo-de-descriptografia-do-vault" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-flowchart TD
+<pre class="mermaid"><code>flowchart TD
     A[Início] --&gt; B{Vault está&lt;br/&gt;criptografado?}
 
     B --&gt;|Sim| C{Senha fornecida?}
@@ -1571,8 +1566,7 @@ flowchart TD
     L --&gt; N[Fim com sucesso]</code></pre>
 <h2 id="fluxo-de-provisionamento">Fluxo de Provisionamento<a class="headerlink" href="#fluxo-de-provisionamento" title="Permanent link">&para;</a></h2>
 <h3 id="fluxo-principal-de-execucao">Fluxo Principal de Execução<a class="headerlink" href="#fluxo-principal-de-execucao" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-flowchart TD
+<pre class="mermaid"><code>flowchart TD
     A[Início] --&gt; B[Carregar Variáveis]
     B --&gt; C{Variáveis&lt;br/&gt;válidas?}
 
@@ -1605,8 +1599,7 @@ flowchart TD
 
     D --&gt; V[Fim com erro]</code></pre>
 <h3 id="fluxo-detalhado-de-criacao-de-rede">Fluxo Detalhado de Criação de Rede<a class="headerlink" href="#fluxo-detalhado-de-criacao-de-rede" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-sequenceDiagram
+<pre class="mermaid"><code>sequenceDiagram
     participant A as Ansible
     participant M as Meraki API
     participant DB as Meraki Dashboard
@@ -1633,8 +1626,7 @@ sequenceDiagram
     A-&gt;&gt;A: Consolidar todos Network IDs</code></pre>
 <h2 id="fluxo-de-configuracao-de-ssids">Fluxo de Configuração de SSIDs<a class="headerlink" href="#fluxo-de-configuracao-de-ssids" title="Permanent link">&para;</a></h2>
 <h3 id="processo-de-configuracao-de-ssid">Processo de Configuração de SSID<a class="headerlink" href="#processo-de-configuracao-de-ssid" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-flowchart TD
+<pre class="mermaid"><code>flowchart TD
     A[Início SSID Config] --&gt; B[Para cada Rede]
     B --&gt; C{Rede tem&lt;br/&gt;wireless?}
 
@@ -1665,8 +1657,7 @@ flowchart TD
     O --&gt;|Não| P[Fim]</code></pre>
 <h2 id="fluxo-de-provisionamento-de-access-points">Fluxo de Provisionamento de Access Points<a class="headerlink" href="#fluxo-de-provisionamento-de-access-points" title="Permanent link">&para;</a></h2>
 <h3 id="fluxo-de-claim-e-configuracao-de-aps">Fluxo de Claim e Configuração de APs<a class="headerlink" href="#fluxo-de-claim-e-configuracao-de-aps" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-sequenceDiagram
+<pre class="mermaid"><code>sequenceDiagram
     participant A as Ansible
     participant M as Meraki API
     participant I as Inventory
@@ -1703,8 +1694,7 @@ sequenceDiagram
     end</code></pre>
 <h2 id="fluxo-de-seguranca">Fluxo de Segurança<a class="headerlink" href="#fluxo-de-seguranca" title="Permanent link">&para;</a></h2>
 <h3 id="ciclo-de-vida-de-credenciais">Ciclo de Vida de Credenciais<a class="headerlink" href="#ciclo-de-vida-de-credenciais" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-flowchart TD
+<pre class="mermaid"><code>flowchart TD
     subgraph "Criação"
         A[Gerar API Key no&lt;br/&gt;Meraki Dashboard] --&gt; B[Copiar API Key]
         B --&gt; C[Criar vault.yml]
@@ -1735,8 +1725,7 @@ flowchart TD
 
     M -.-&gt; N</code></pre>
 <h3 id="validacao-de-entrada">Validação de Entrada<a class="headerlink" href="#validacao-de-entrada" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-flowchart TD
+<pre class="mermaid"><code>flowchart TD
     A[Receber Input] --&gt; B{meraki_api_key&lt;br/&gt;definida?}
 
     B --&gt;|Não| C[ERRO: API Key obrigatória]
@@ -1759,8 +1748,7 @@ flowchart TD
     I --&gt; L</code></pre>
 <h2 id="diagrama-de-estados">Diagrama de Estados<a class="headerlink" href="#diagrama-de-estados" title="Permanent link">&para;</a></h2>
 <h3 id="estados-do-provisionamento">Estados do Provisionamento<a class="headerlink" href="#estados-do-provisionamento" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-stateDiagram-v2
+<pre class="mermaid"><code>stateDiagram-v2
     [*] --&gt; Iniciando
 
     Iniciando --&gt; Validando: Carregar config
@@ -1786,8 +1774,7 @@ stateDiagram-v2
     Erro --&gt; [*]</code></pre>
 <h2 id="diagrama-de-componentes">Diagrama de Componentes<a class="headerlink" href="#diagrama-de-componentes" title="Permanent link">&para;</a></h2>
 <h3 id="interacao-entre-componentes">Interação entre Componentes<a class="headerlink" href="#interacao-entre-componentes" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>%%{init: {'theme': 'dark'}}%%
-graph TB
+<pre class="mermaid"><code>graph TB
     subgraph "Interface"
         CLI[Ansible CLI]
     end
