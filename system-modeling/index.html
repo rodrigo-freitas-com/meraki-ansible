@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -683,6 +685,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fluxo-de-configuracao-de-ssids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fluxo de Configuracao de SSIDs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fluxo de Configuracao de SSIDs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processo-de-configuracao-de-ssid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processo de Configuracao de SSID
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fluxo-de-provisionamento-de-access-points" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1158,6 +1188,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fluxo-de-configuracao-de-ssids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fluxo de Configuracao de SSIDs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fluxo de Configuracao de SSIDs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processo-de-configuracao-de-ssid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processo de Configuracao de SSID
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fluxo-de-provisionamento-de-access-points" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1568,6 +1626,37 @@
     end
 
     A-&gt;&gt;A: Consolidar todos Network IDs</code></pre>
+<h2 id="fluxo-de-configuracao-de-ssids">Fluxo de Configuracao de SSIDs<a class="headerlink" href="#fluxo-de-configuracao-de-ssids" title="Permanent link">&para;</a></h2>
+<h3 id="processo-de-configuracao-de-ssid">Processo de Configuracao de SSID<a class="headerlink" href="#processo-de-configuracao-de-ssid" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    A[Inicio SSID Config] --&gt; B[Para cada Rede]
+    B --&gt; C{Rede tem wireless}
+
+    C --&gt;|Nao| D[Pular rede]
+    C --&gt;|Sim| E[Para cada SSID]
+
+    E --&gt; F[Montar payload]
+
+    F --&gt; G{Auth Mode}
+    G --&gt;|open| H[Sem senha]
+    G --&gt;|psk| I[Incluir PSK]
+
+    H --&gt; J[PUT /networks/ID/wireless/ssids/N]
+    I --&gt; J
+
+    J --&gt; K{Sucesso}
+    K --&gt;|Sim| L[SSID configurado]
+    K --&gt;|Nao| M[Registrar erro]
+
+    L --&gt; N{Mais SSIDs}
+    M --&gt; N
+
+    N --&gt;|Sim| E
+    N --&gt;|Nao| O{Mais redes}
+
+    D --&gt; O
+    O --&gt;|Sim| B
+    O --&gt;|Nao| P[Fim]</code></pre>
 <h2 id="fluxo-de-provisionamento-de-access-points">Fluxo de Provisionamento de Access Points<a class="headerlink" href="#fluxo-de-provisionamento-de-access-points" title="Permanent link">&para;</a></h2>
 <h3 id="fluxo-de-claim-e-configuracao-de-aps">Fluxo de Claim e Configuracao de APs<a class="headerlink" href="#fluxo-de-claim-e-configuracao-de-aps" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>sequenceDiagram
