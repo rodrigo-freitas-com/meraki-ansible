@@ -7,7 +7,6 @@ Este documento apresenta os diagramas de arquitetura, fluxos e modelos de dados 
 ### Diagrama Entidade-Relacionamento (ERD)
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 erDiagram
     ORGANIZATION ||--o{ NETWORK : contains
     NETWORK ||--o{ SSID : has
@@ -72,7 +71,6 @@ erDiagram
 ### Visão Geral da Arquitetura
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 graph TB
     subgraph "Ambiente Local"
         A[Operador] --> B[Ansible Controller]
@@ -110,7 +108,6 @@ graph TB
 ### Componentes do Sistema
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 graph LR
     subgraph "Camada de Apresentação"
         A[CLI - Ansible Playbook]
@@ -162,7 +159,6 @@ graph LR
 ### Fluxo de Validação da API Key
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 sequenceDiagram
     participant O as Operador
     participant A as Ansible
@@ -198,7 +194,6 @@ sequenceDiagram
 ### Processo de Descriptografia do Vault
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 flowchart TD
     A[Início] --> B{Vault está<br/>criptografado?}
 
@@ -230,7 +225,6 @@ flowchart TD
 ### Fluxo Principal de Execução
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 flowchart TD
     A[Início] --> B[Carregar Variáveis]
     B --> C{Variáveis<br/>válidas?}
@@ -268,7 +262,6 @@ flowchart TD
 ### Fluxo Detalhado de Criação de Rede
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 sequenceDiagram
     participant A as Ansible
     participant M as Meraki API
@@ -301,7 +294,6 @@ sequenceDiagram
 ### Processo de Configuração de SSID
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 flowchart TD
     A[Início SSID Config] --> B[Para cada Rede]
     B --> C{Rede tem<br/>wireless?}
@@ -338,7 +330,6 @@ flowchart TD
 ### Fluxo de Claim e Configuração de APs
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 sequenceDiagram
     participant A as Ansible
     participant M as Meraki API
@@ -381,7 +372,6 @@ sequenceDiagram
 ### Ciclo de Vida de Credenciais
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 flowchart TD
     subgraph "Criação"
         A[Gerar API Key no<br/>Meraki Dashboard] --> B[Copiar API Key]
@@ -417,7 +407,6 @@ flowchart TD
 ### Validação de Entrada
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 flowchart TD
     A[Receber Input] --> B{meraki_api_key<br/>definida?}
 
@@ -446,7 +435,6 @@ flowchart TD
 ### Estados do Provisionamento
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 stateDiagram-v2
     [*] --> Iniciando
 
@@ -478,7 +466,6 @@ stateDiagram-v2
 ### Interação entre Componentes
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
 graph TB
     subgraph "Interface"
         CLI[Ansible CLI]
