@@ -251,13 +251,13 @@ meraki_provision.yml
 ┌─────────────────────────────────────────────────────────┐
 │                    PRIORIDADE                           │
 ├─────────────────────────────────────────────────────────┤
-│  ALTA   │  Linha de comando (-e var=value)             │
+│  ALTA   │  Linha de comando (-e var=value)              │
 ├─────────┼───────────────────────────────────────────────┤
-│         │  vars/vault.yml (credenciais)                │
+│         │  vars/vault.yml (credenciais)                 │
 ├─────────┼───────────────────────────────────────────────┤
-│         │  vars/meraki_config.yml (configuração)       │
+│         │  vars/meraki_config.yml (configuração)        │
 ├─────────┼───────────────────────────────────────────────┤
-│  BAIXA  │  roles/*/defaults/main.yml (padrões)         │
+│  BAIXA  │  roles/*/defaults/main.yml (padrões)          │
 └─────────┴───────────────────────────────────────────────┘
 ```
 
