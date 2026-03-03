@@ -289,42 +289,6 @@ sequenceDiagram
     A->>A: Consolidar todos Network IDs
 ```
 
-## Fluxo de Configuracao de SSIDs
-
-### Processo de Configuracao de SSID
-
-```mermaid
-flowchart TD
-    A[Início Configuração SSIDs] --> B[Para cada Network ID]
-    B --> C{Network possui<br/>produto wireless?}
-
-    C -->|Não| D[Pular network]
-    C -->|Sim| E[Para cada SSID definido<br/>na meraki_config.yml]
-
-    E --> F[Definir número do SSID<br/>(0-14)]
-    F --> G[Montar payload completo]
-
-    G --> H{auth_mode}
-    H -->|open| I[Remover campos de senha]
-    H -->|psk| J[Incluir encryptionMode<br/>e psk]
-
-    I --> K[PUT /networks/{network_id}/wireless/ssids/{number}]
-    J --> K
-
-    K --> L{Status 200?}
-    L -->|Sim| M[SSID atualizado com sucesso]
-    L -->|Não| N[Registrar erro e continuar]
-
-    M --> O{Há mais SSIDs?}
-    N --> O
-
-    O -->|Sim| E
-    O -->|Não| P{Há mais networks?}
-
-    D --> P
-    P -->|Sim| B
-    P -->|Não| Q[Fim]
-```
 
 ## Fluxo de Provisionamento de Access Points
 
