@@ -295,34 +295,35 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    A[Início SSID Config] --> B[Para cada Rede]
-    B --> C{Rede tem<br/>wireless?}
+    A[Início Configuração SSIDs] --> B[Para cada Network ID]
+    B --> C{Network possui<br/>produto wireless?}
 
-    C -->|Não| D[Pular rede]
-    C -->|Sim| E[Para cada SSID]
+    C -->|Não| D[Pular network]
+    C -->|Sim| E[Para cada SSID definido<br/>na meraki_config.yml]
 
-    E --> F[Montar payload]
+    E --> F[Definir número do SSID<br/>(0-14)]
+    F --> G[Montar payload completo]
 
-    F --> G{Auth Mode?}
-    G -->|open| H[Sem senha]
-    G -->|psk| I[Incluir PSK]
+    G --> H{auth_mode}
+    H -->|open| I[Remover campos de senha]
+    H -->|psk| J[Incluir encryptionMode<br/>e psk]
 
-    H --> J[PUT /networks/id/wireless/ssids/n]
-    I --> J
+    I --> K[PUT /networks/{network_id}/wireless/ssids/{number}]
+    J --> K
 
-    J --> K{Sucesso?}
-    K -->|Sim| L[SSID configurado]
-    K -->|Não| M[Registrar erro]
+    K --> L{Status 200?}
+    L -->|Sim| M[SSID atualizado com sucesso]
+    L -->|Não| N[Registrar erro e continuar]
 
-    L --> N{Mais SSIDs?}
-    M --> N
+    M --> O{Há mais SSIDs?}
+    N --> O
 
-    N -->|Sim| E
-    N -->|Não| O{Mais redes?}
+    O -->|Sim| E
+    O -->|Não| P{Há mais networks?}
 
-    D --> O
-    O -->|Sim| B
-    O -->|Não| P[Fim]
+    D --> P
+    P -->|Sim| B
+    P -->|Não| Q[Fim]
 ```
 
 ## Fluxo de Provisionamento de Access Points
