@@ -93,3 +93,7 @@ nav:
   - Release Notes: release-notes.md
 
 copyright: "&copy; 2026 Freitas"
+
+extra_javascript:
+  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+  - javascripts/mermaid-init.js
