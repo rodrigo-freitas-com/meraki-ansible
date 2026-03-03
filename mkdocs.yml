@@ -8,16 +8,16 @@ theme:
   name: material
   language: pt-BR
   palette:
-    - scheme: default
-      primary: black
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
     - scheme: slate
       primary: black
       toggle:
         icon: material/weather-sunny
-        name: Switch to light mode
+        name: Alternar para modo claro
+    - scheme: default
+      primary: black
+      toggle:
+        icon: material/weather-night
+        name: Alternar para modo escuro
 
   font:
     text: Roboto
@@ -48,7 +48,6 @@ markdown_extensions:
   - def_list
   - footnotes
   - md_in_html
-  - tables
   - toc:
       permalink: true
   - pymdownx.arithmatex:

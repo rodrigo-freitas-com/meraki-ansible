@@ -117,9 +117,10 @@ GET /organizations/{organizationId}/networks
 ```
 
 **Parâmetros de Path**:
+
 | Parâmetro | Tipo | Descrição |
 |-----------|------|-----------|
-| `organizationId` | string | ID da organização |
+| organizationId | string | ID da organização |
 
 **Resposta de Sucesso (200)**:
 ```json
@@ -211,10 +212,11 @@ PUT /networks/{networkId}/wireless/ssids/{number}
 ```
 
 **Parâmetros de Path**:
+
 | Parâmetro | Tipo | Descrição |
 |-----------|------|-----------|
-| `networkId` | string | ID da rede |
-| `number` | integer | Número do SSID (0-14) |
+| networkId | string | ID da rede |
+| number | integer | Número do SSID (0-14) |
 
 **Request Body**:
 ```json
@@ -231,16 +233,17 @@ PUT /networks/{networkId}/wireless/ssids/{number}
 ```
 
 **Parâmetros do Body**:
+
 | Parâmetro | Tipo | Obrigatório | Descrição |
 |-----------|------|-------------|-----------|
-| `name` | string | Sim | Nome do SSID |
-| `enabled` | boolean | Sim | SSID ativo |
-| `authMode` | string | Não | Modo de autenticação |
-| `encryptionMode` | string | Não | Modo de criptografia |
-| `wpaEncryptionMode` | string | Não | Versão WPA |
-| `psk` | string | Condicional | Senha (se authMode=psk) |
-| `ipAssignmentMode` | string | Não | Modo de IP |
-| `defaultVlanId` | integer | Não | VLAN padrão |
+| name | string | Sim | Nome do SSID |
+| enabled | boolean | Sim | SSID ativo |
+| authMode | string | Não | Modo de autenticação |
+| encryptionMode | string | Não | Modo de criptografia |
+| wpaEncryptionMode | string | Não | Versão WPA |
+| psk | string | Condicional | Senha (se authMode=psk) |
+| ipAssignmentMode | string | Não | Modo de IP |
+| defaultVlanId | integer | Não | VLAN padrão |
 
 **Resposta de Sucesso (200)**:
 ```json
@@ -359,9 +362,10 @@ PUT /devices/{serial}
 ```
 
 **Parâmetros de Path**:
+
 | Parâmetro | Tipo | Descrição |
 |-----------|------|-----------|
-| `serial` | string | Número de série do dispositivo |
+| serial | string | Número de série do dispositivo |
 
 **Request Body**:
 ```json
