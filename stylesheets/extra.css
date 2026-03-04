@@ -131,7 +131,7 @@
 }
 
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
-  background-color: #00796b !important;
+  background-color: #0000 !important;
   color: #ffffff !important;
 }
 
