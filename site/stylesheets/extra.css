@@ -126,12 +126,12 @@
 
 /* Tabelas */
 .md-typeset table:not([class]) th {
-  background-color: #000000 !important;
+  background-color: #00796b !important;
   color: #ffffff !important;
 }
 
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
-  background-color: #000000 !important;
+  background-color: #0000 !important;
   color: #ffffff !important;
 }
 
