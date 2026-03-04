@@ -1,65 +1,56 @@
-/* =========================================================
-   Meraki Ansible Docs - Custom Dark Theme (Mermaid + Tables)
-   ========================================================= */
+/* Estilos customizados para Meraki Ansible Docs */
 
-/* =======================
-   Mermaid - Base
-   ======================= */
+/* Mermaid - Forcar cores para modo dark */
 .mermaid {
   background: transparent !important;
 }
 
-.mermaid text {
-  fill: #ffffff !important;
-}
-
-/* =======================
-   ERD Diagram
-   ======================= */
+/* ERD Diagram */
 .mermaid .er.entityBox {
   fill: #2d2d2d !important;
-  stroke: #00bcd4 !important;
-  stroke-width: 2px !important;
+  stroke: #ffffff !important;
 }
 
 .mermaid .er.entityLabel {
   fill: #ffffff !important;
-  font-weight: 600;
+  color: #ffffff !important;
 }
 
 .mermaid .er.attributeBoxOdd,
 .mermaid .er.attributeBoxEven {
   fill: #3d3d3d !important;
-  stroke: #555555 !important;
+  stroke: #666666 !important;
 }
 
-.mermaid .er.relationshipLine {
+.mermaid text {
+  fill: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.mermaid .entityBox {
+  fill: #2d2d2d !important;
   stroke: #00bcd4 !important;
-  stroke-width: 2px !important;
 }
 
 .mermaid .relationshipLabelBox {
   fill: #1e1e1e !important;
 }
 
-/* =======================
-   Flowchart
-   ======================= */
+.mermaid .relationshipLine {
+  stroke: #00bcd4 !important;
+}
+
+/* Flowchart */
 .mermaid .node rect,
 .mermaid .node polygon,
 .mermaid .node circle {
   fill: #2d2d2d !important;
   stroke: #00bcd4 !important;
-  stroke-width: 2px !important;
 }
 
 .mermaid .node .label {
+  color: #ffffff !important;
   fill: #ffffff !important;
-}
-
-.mermaid .edgePath path {
-  stroke: #00bcd4 !important;
-  stroke-width: 2px !important;
 }
 
 .mermaid .edgeLabel {
@@ -67,20 +58,26 @@
   color: #ffffff !important;
 }
 
+.mermaid .edgePath path {
+  stroke: #00bcd4 !important;
+}
+
 .mermaid marker path {
   fill: #00bcd4 !important;
 }
 
-/* =======================
-   Sequence Diagram
-   ======================= */
+/* Sequence Diagram */
 .mermaid .actor {
   fill: #2d2d2d !important;
   stroke: #00bcd4 !important;
 }
 
 .mermaid .actor-line {
-  stroke: #555555 !important;
+  stroke: #666666 !important;
+}
+
+.mermaid text.actor {
+  fill: #ffffff !important;
 }
 
 .mermaid .messageLine0,
@@ -88,24 +85,26 @@
   stroke: #00bcd4 !important;
 }
 
-.mermaid .messageText,
-.mermaid .loopText,
-.mermaid .labelText {
+.mermaid .messageText {
   fill: #ffffff !important;
 }
 
-.mermaid .loopLine,
-.mermaid .labelBox {
-  stroke: #555555 !important;
+.mermaid .loopText,
+.mermaid .loopLine {
+  fill: #ffffff !important;
+  stroke: #666666 !important;
 }
 
 .mermaid .labelBox {
   fill: #2d2d2d !important;
+  stroke: #666666 !important;
 }
 
-/* =======================
-   State Diagram
-   ======================= */
+.mermaid .labelText {
+  fill: #ffffff !important;
+}
+
+/* State Diagram */
 .mermaid .stateGroup rect {
   fill: #2d2d2d !important;
   stroke: #00bcd4 !important;
@@ -115,9 +114,7 @@
   fill: #ffffff !important;
 }
 
-/* =======================
-   Subgraph / Cluster
-   ======================= */
+/* Subgraph */
 .mermaid .cluster rect {
   fill: #252525 !important;
   stroke: #444444 !important;
@@ -127,26 +124,22 @@
   fill: #ffffff !important;
 }
 
-/* =======================
-   Tables (MkDocs Material - Slate)
-   ======================= */
-[data-md-color-scheme="slate"] .md-typeset table:not([class]) {
-  border: 1px solid #3f3f3f !important;
+/* Tabelas */
+.md-typeset table:not([class]) th {
+  background-color: #1F2129 !important;
+  color: #ffffff !important;
 }
 
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
   background-color: #1F2129 !important;
   color: #ffffff !important;
-  border: 1px solid #3f3f3f !important;
 }
 
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) td {
-  border: 1px solid #3f3f3f !important;
+  border: 1px solid #444444 !important;
 }
 
-/* =======================
-   Links
-   ======================= */
+/* Links */
 .md-typeset a {
   color: #00bcd4 !important;
 }
