@@ -6,7 +6,6 @@ Bem-vindo à documentação oficial do **Meraki Ansible**, um framework de autom
   <img src="assets/naoIA.svg">
 </div>
 
-
 ## Sobre o Projeto
 
 Este projeto automatiza o provisionamento completo de ambientes Cisco Meraki, incluindo:
