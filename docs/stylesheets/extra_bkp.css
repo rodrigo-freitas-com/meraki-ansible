@@ -1,11 +1,8 @@
-/* Estilos customizados para Meraki Ansible Docs */
-
-/* Mermaid - Forcar cores para modo dark */
 .mermaid {
   background: transparent !important;
 }
 
-/* ERD Diagram */
+
 .mermaid .er.entityBox {
   fill: #2d2d2d !important;
   stroke: #ffffff !important;
@@ -40,7 +37,7 @@
   stroke: #00bcd4 !important;
 }
 
-/* Flowchart */
+
 .mermaid .node rect,
 .mermaid .node polygon,
 .mermaid .node circle {
@@ -104,7 +101,7 @@
   fill: #ffffff !important;
 }
 
-/* State Diagram */
+
 .mermaid .stateGroup rect {
   fill: #2d2d2d !important;
   stroke: #00bcd4 !important;
@@ -114,17 +111,17 @@
   fill: #ffffff !important;
 }
 
-/* Subgraph */
 .mermaid .cluster rect {
   fill: #252525 !important;
   stroke: #444444 !important;
 }
 
+
 .mermaid .cluster text {
   fill: #ffffff !important;
 }
 
-/* Tabelas */
+
 .md-typeset table:not([class]) th {
   background-color: #1F2129 !important;
   color: #ffffff !important;
@@ -139,7 +136,7 @@
   border: 1px solid #444444 !important;
 }
 
-/* Links */
+
 .md-typeset a {
   color: #00bcd4 !important;
 }
