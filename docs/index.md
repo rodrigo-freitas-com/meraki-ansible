@@ -1,6 +1,10 @@
 # Meraki Ansible - Documentação
 
-Bem-vindo à documentação oficial do **Meraki Ansible**, um framework de automação para provisionamento de infraestrutura Cisco Meraki utilizando Ansible.        ![naoIA](assets/naoIA.svg)
+Bem-vindo à documentação oficial do **Meraki Ansible**, um framework de automação para provisionamento de infraestrutura Cisco Meraki utilizando Ansible.
+
+<div style="text-align: right; margin-left: 0;">
+  <img src="assets/naoIA.svg">
+</div>
 
 
 ## Sobre o Projeto
